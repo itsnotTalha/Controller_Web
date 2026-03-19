@@ -102,6 +102,16 @@ function getPointer(e) {
     return e;
 }
 
+// Deadzone threshold — values below this snap to 0
+const DEADZONE = 0.12;
+
+function applyDeadzone(value) {
+    if (Math.abs(value) < DEADZONE) return 0;
+    // Rescale so output starts from 0 right after deadzone, reaches 1 at edge
+    const sign = value > 0 ? 1 : -1;
+    return sign * (Math.abs(value) - DEADZONE) / (1 - DEADZONE);
+}
+
 // Analog joystick: element center = 0, edge = 1.0 or -1.0
 // Smooth float values just like a real PS4 controller
 function getAnalogStick(clientX, clientY, element) {
@@ -110,10 +120,13 @@ function getAnalogStick(clientX, clientY, element) {
     const centerY = rect.top  + rect.height / 2;
     const radius  = rect.width / 2;
 
-    const x = Math.max(-1, Math.min(1, (clientX - centerX) / radius));
-    const y = Math.max(-1, Math.min(1, (clientY - centerY) / radius));
+    const rawX = Math.max(-1, Math.min(1, (clientX - centerX) / radius));
+    const rawY = Math.max(-1, Math.min(1, (clientY - centerY) / radius));
 
-    return { x, y };
+    return {
+        x: applyDeadzone(rawX),
+        y: applyDeadzone(rawY)
+    };
 }
 
 function getDpadAxis() {
@@ -153,8 +166,8 @@ function publishJoy() {
     const buttons = [
         getButtonValue('cross'),    // 0
         getButtonValue('circle'),   // 1
-        getButtonValue('triangle'), // 3
         getButtonValue('square'),   // 2
+        getButtonValue('triangle'), // 3
         getButtonValue('l1'),       // 4
         getButtonValue('r1'),       // 5
         getButtonValue('l2'),       // 6 L2 digital
@@ -323,7 +336,7 @@ function initROSBridge() {
             });
 
             if (!joyPublishTimer) {
-                joyPublishTimer = setInterval(publishJoy, 50);
+                joyPublishTimer = setInterval(publishJoy, 10);
             }
         });
 
