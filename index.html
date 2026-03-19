@@ -2,42 +2,52 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>Switch Controller</title>
 	<link rel="stylesheet" href="style.css" />
 	<script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
 </head>
 <body>
-	<div class="switch-wrap">
-		<div class="switch-device">
-			<!-- Left Grip -->
+	<div class="controller-wrap">
+		<div class="controller">
+
+			<!-- ═══════════════ LEFT JOYCON ═══════════════ -->
 			<div class="joycon joycon-left">
-				<button class="trigger trigger-left" id="trigger-l2" data-btn="l2">
-					L2
-					<span class="trigger-meter"><span class="trigger-fill" id="l2-fill"></span></span>
-				</button>
-				<button class="pill-btn" data-btn="l1">L1</button>
 
-				<div class="joystick" id="joystick-left" data-side="left">
-					<div class="joystick-ring"></div>
-					<div class="joystick-knob" id="knob-left"></div>
-					<span class="joystick-label">L</span>
+				<!-- Top triggers -->
+				<div class="triggers-row">
+					<button class="trigger-btn" id="trigger-l2" data-btn="l2">
+						<span class="trigger-label-text">L2</span>
+						<span class="trigger-meter"><span class="trigger-fill" id="l2-fill"></span></span>
+					</button>
+					<button class="shoulder-btn" data-btn="l1">L1</button>
 				</div>
 
-				<div class="mini-buttons"></div>
-
-				<div class="dpad">
-					<div class="dpad-center"></div>
-					<button class="dpad-btn" data-btn="up">▲</button>
-					<button class="dpad-btn" data-btn="down">▼</button>
-					<button class="dpad-btn" data-btn="left">◀</button>
-					<button class="dpad-btn" data-btn="right">▶</button>
+				<!-- Joystick -->
+				<div class="joystick-zone top-zone">
+					<div class="joystick" id="joystick-left">
+						<div class="joystick-ring"></div>
+						<div class="joystick-knob" id="knob-left"></div>
+					</div>
+					<span class="zone-label">L</span>
 				</div>
 
-				<div class="rail rail-left"></div>
+				<!-- D-Pad -->
+				<div class="joystick-zone bottom-zone">
+					<div class="dpad">
+						<div class="dpad-center"></div>
+						<button class="dpad-btn dpad-up"    data-btn="up">▲</button>
+						<button class="dpad-btn dpad-down"  data-btn="down">▼</button>
+						<button class="dpad-btn dpad-left"  data-btn="left">◀</button>
+						<button class="dpad-btn dpad-right" data-btn="right">▶</button>
+					</div>
+					<span class="zone-label">D-PAD</span>
+				</div>
+
+				<div class="rail rail-right"></div>
 			</div>
 
-			<!-- Center Screen -->
+			<!-- ═══════════════ SCREEN ═══════════════ -->
 			<div class="screen">
 				<div class="screen-top">
 					<span class="screen-title">CTRL</span>
@@ -58,19 +68,19 @@
 
 					<div class="screen-section">
 						<div class="section-title">Sticks</div>
-						<div class="stick-row" data-side="left">
-							<span class="stick-label stick-left">L</span>
+						<div class="stick-row">
+							<span class="stick-label">L</span>
 							<div class="stick-track stick-left">
 								<span class="stick-dot" id="stick-dot-left"></span>
 							</div>
-							<span class="stick-value" id="stick-value-left">+0,+0</span>
+							<span class="stick-value" id="stick-value-left">0.00,0.00</span>
 						</div>
-						<div class="stick-row" data-side="right">
-							<span class="stick-label stick-right">R</span>
+						<div class="stick-row">
+							<span class="stick-label">R</span>
 							<div class="stick-track stick-right">
 								<span class="stick-dot" id="stick-dot-right"></span>
 							</div>
-							<span class="stick-value" id="stick-value-right">+0,+0</span>
+							<span class="stick-value" id="stick-value-right">0.00,0.00</span>
 						</div>
 					</div>
 
@@ -78,19 +88,19 @@
 
 					<div class="screen-section">
 						<div class="section-title">Triggers</div>
-						<div class="trigger-row" data-side="l2">
-							<span class="trigger-label trigger-left">L2</span>
-							<div class="trigger-bar trigger-left">
+						<div class="trigger-row">
+							<span class="trig-label">L2</span>
+							<div class="trigger-bar">
 								<span class="trigger-bar-fill" id="trigger-bar-left"></span>
 							</div>
-							<span class="trigger-value" id="trigger-value-left">0</span>
+							<span class="trigger-value" id="trigger-value-left">0.00</span>
 						</div>
-						<div class="trigger-row" data-side="r2">
-							<span class="trigger-label trigger-right">R2</span>
-							<div class="trigger-bar trigger-right">
+						<div class="trigger-row">
+							<span class="trig-label">R2</span>
+							<div class="trigger-bar">
 								<span class="trigger-bar-fill" id="trigger-bar-right"></span>
 							</div>
-							<span class="trigger-value" id="trigger-value-right">0</span>
+							<span class="trigger-value" id="trigger-value-right">0.00</span>
 						</div>
 					</div>
 
@@ -100,31 +110,41 @@
 				<div class="screen-bottom"></div>
 			</div>
 
-			<!-- Right Grip -->
+			<!-- ═══════════════ RIGHT JOYCON ═══════════════ -->
 			<div class="joycon joycon-right">
-				<button class="trigger trigger-right" id="trigger-r2" data-btn="r2">
-					R2
-					<span class="trigger-meter"><span class="trigger-fill" id="r2-fill"></span></span>
-				</button>
-				<button class="pill-btn" data-btn="r1">R1</button>
 
-				<div class="action-buttons">
-					<button class="action-btn action-triangle" data-btn="triangle">△</button>
-					<button class="action-btn action-circle" data-btn="circle">○</button>
-					<button class="action-btn action-cross" data-btn="cross">✕</button>
-					<button class="action-btn action-square" data-btn="square">□</button>
+				<!-- Top triggers -->
+				<div class="triggers-row">
+					<button class="shoulder-btn" data-btn="r1">R1</button>
+					<button class="trigger-btn" id="trigger-r2" data-btn="r2">
+						<span class="trigger-label-text">R2</span>
+						<span class="trigger-meter"><span class="trigger-fill" id="r2-fill"></span></span>
+					</button>
 				</div>
 
-				<div class="mini-buttons mini-buttons-right"></div>
-
-				<div class="joystick" id="joystick-right" data-side="right">
-					<div class="joystick-ring"></div>
-					<div class="joystick-knob" id="knob-right"></div>
-					<span class="joystick-label">R</span>
+				<!-- Action buttons -->
+				<div class="joystick-zone top-zone">
+					<div class="action-buttons">
+						<button class="action-btn action-triangle" data-btn="triangle">△</button>
+						<button class="action-btn action-circle"   data-btn="circle">○</button>
+						<button class="action-btn action-cross"    data-btn="cross">✕</button>
+						<button class="action-btn action-square"   data-btn="square">□</button>
+					</div>
+					<span class="zone-label">BUTTONS</span>
 				</div>
 
-				<div class="rail rail-right"></div>
+				<!-- Right Joystick -->
+				<div class="joystick-zone bottom-zone">
+					<div class="joystick" id="joystick-right">
+						<div class="joystick-ring"></div>
+						<div class="joystick-knob" id="knob-right"></div>
+					</div>
+					<span class="zone-label">R</span>
+				</div>
+
+				<div class="rail rail-left"></div>
 			</div>
+
 		</div>
 	</div>
 
