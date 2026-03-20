@@ -36,5 +36,5 @@ http://localhost:8000
 Add a screenshot here:
 
 ```
-![Controller UI](docs/image.png)
+![Controller UI](image.png)
 ```
