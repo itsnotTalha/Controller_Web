@@ -21,7 +21,7 @@
 	--accent-blue: #1a6be0;
 
 	/* Controller base size — everything else is relative to this */
-	--base: 1px;           /* overridden by JS/clamp below */
+	--base: 1px;
 
 	/* Fixed logical dimensions (at 1× scale) */
 	--ctrl-w:    1100px;
@@ -66,11 +66,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 
 /* ── Controller shell — scales via CSS clamp ─────────── */
 .controller {
-	/*
-	  Scale factor = min(viewport / controller) capped at 1.
-	  We use a container approach: set width/height in px then
-	  transform-scale so it fits any viewport.
-	*/
 	position: relative;
 	width:  var(--ctrl-w);
 	height: var(--ctrl-h);
@@ -79,7 +74,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	justify-content: center;
 	gap: 0;
 
-	/* Scale down to fit viewport with 20px padding each side */
 	--scale: min(
 		1,
 		min(
@@ -118,7 +112,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	padding-top: 0;
 }
 
-/* ── Rail (connecting bar between joycon and screen) ─── */
+/* ── Rail ─── */
 .rail {
 	position: absolute;
 	top: 44px; bottom: 44px;
@@ -129,7 +123,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 .rail-right { right: -1px; }
 .rail-left  { left:  -1px; }
 
-/* ── Triggers row (L2/R2 + L1/R1) ───────────────────── */
+/* ── Triggers row ─── */
 .triggers-row {
 	width: 100%;
 	display: flex;
@@ -142,7 +136,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 .joycon-left  .triggers-row { padding-top: 0; }
 .joycon-right .triggers-row { padding-top: 0; }
 
-/* L2 / R2 analog trigger */
 .trigger-btn {
 	flex: 1;
 	height: 32px;
@@ -159,7 +152,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	position: relative;
 	overflow: hidden;
 	transition: filter 0.08s;
-	margin-top: -4px; /* poke up slightly like a real trigger */
+	margin-top: -4px;
 }
 .trigger-btn.pressed { filter: brightness(0.75); }
 
@@ -183,7 +176,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	transition: width 0.06s;
 }
 
-/* L1 / R1 shoulder */
 .shoulder-btn {
 	flex: 1;
 	height: 32px;
@@ -205,7 +197,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	background: rgba(255,255,255,0.14);
 }
 
-/* ── Zone wrappers (joystick / dpad / actions) ────────── */
+/* ── Zone wrappers ─── */
 .joystick-zone {
 	display: flex;
 	flex-direction: column;
@@ -226,7 +218,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	color: rgba(255,255,255,0.14);
 }
 
-/* ── Joystick ─────────────────────────────────────────── */
+/* ── Joystick ─── */
 .joystick {
 	width:  var(--stick-size);
 	height: var(--stick-size);
@@ -237,6 +229,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	cursor: grab;
 	flex-shrink: 0;
 	box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.5);
+	touch-action: none;
 }
 .joystick:active { cursor: grabbing; }
 
@@ -262,7 +255,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	transition: transform 0.1s ease-out;
 }
 
-/* ── D-Pad ─────────────────────────────────────────────── */
+/* ── D-Pad ─── */
 .dpad {
 	position: relative;
 	width:  var(--dpad-size);
@@ -297,7 +290,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	color: rgba(255,255,255,0.8);
 }
 
-/* Cross layout */
 .dpad-up {
 	width: var(--dpad-arm-w); height: var(--dpad-arm-h);
 	top: 0; left: 50%; transform: translateX(-50%);
@@ -326,7 +318,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 }
 .dpad-right.pressed { transform: translateY(-50%) scale(0.9); }
 
-/* ── Action buttons ────────────────────────────────────── */
+/* ── Action buttons ─── */
 .action-buttons {
 	position: relative;
 	width:  var(--action-size);
@@ -352,7 +344,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	filter: brightness(0.8);
 }
 
-/* Diamond layout using calc to perfectly center each button */
 .action-triangle {
 	top: 0;
 	left: calc(50% - var(--action-btn) / 2);
@@ -379,7 +370,7 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 .action-circle.pressed,
 .action-square.pressed   { transform: scale(0.88); }
 
-/* ── Screen ────────────────────────────────────────────── */
+/* ── Screen ─── */
 .screen {
 	width:  var(--screen-w);
 	height: var(--joy-h);
@@ -427,7 +418,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	border-top: 1px solid rgba(255,255,255,0.04);
 }
 
-/* ROS status */
 .ros-status {
 	font-size: 11px;
 	font-weight: 800;
@@ -437,7 +427,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 }
 .ros-status.connected { color: rgba(40,220,120,0.8); }
 
-/* Screen sections */
 .screen-section { display: flex; flex-direction: column; gap: 5px; }
 
 .section-title {
@@ -468,7 +457,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 
 .divider { height: 1px; background: rgba(255,255,255,0.05); flex-shrink: 0; }
 
-/* Stick rows */
 .stick-row {
 	display: flex;
 	align-items: center;
@@ -510,7 +498,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	letter-spacing: 0.5px;
 }
 
-/* Trigger rows */
 .trigger-row {
 	display: flex;
 	align-items: center;
@@ -551,7 +538,6 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	text-align: right;
 }
 
-/* Home bar */
 .home-bar {
 	margin-top: auto;
 	display: flex;
@@ -563,4 +549,175 @@ button { border: none; background: transparent; font-family: inherit; color: inh
 	width: 26px; height: 3px;
 	border-radius: 3px;
 	background: rgba(255,255,255,0.1);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — Portrait & Landscape
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+	/* ── Portrait: stack layout, controller takes full width ── */
+	@media (orientation: portrait) {
+		.controller-wrap {
+			align-items: flex-end;
+			padding-bottom: env(safe-area-inset-bottom, 0px);
+		}
+
+		.controller {
+			/* Switch to a vertical layout: screen on top, joycons side-by-side below */
+			width: 100vw;
+			height: auto;
+			flex-direction: column;
+			align-items: center;
+			gap: 0;
+			transform: none;
+			--scale: 1;
+		}
+
+		/* ── Screen becomes a top info panel ── */
+		.screen {
+			width: 100%;
+			height: auto;
+			min-height: 120px;
+			border-radius: 0 0 16px 16px;
+			border-top: none;
+			flex-shrink: 0;
+		}
+
+		.screen-body {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 6px;
+			padding: 10px 14px;
+		}
+
+		.screen-section { flex: 1; min-width: 100px; gap: 4px; }
+		.divider { display: none; }
+		.home-bar { display: none; }
+
+		/* ── Joycons row ── */
+		.joycons-row-mobile {
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			align-items: flex-start;
+			flex: 1;
+		}
+
+		.joycon {
+			width: 46vw;
+			height: auto;
+			min-height: 56vh;
+			padding: 0 12px 16px;
+		}
+
+		.joycon-left  { border-radius: 0 16px 36px 0; }
+		.joycon-right { border-radius: 16px 0 0 36px; }
+
+		/* Scale down internal elements proportionally */
+		.joycon-left,
+		.joycon-right {
+			--stick-size:  82px;
+			--knob-size:   52px;
+			--dpad-size:   96px;
+			--dpad-arm-w:  32px;
+			--dpad-arm-h:  34px;
+			--action-size: 102px;
+			--action-btn:  36px;
+		}
+
+		.rail { display: none; }
+
+		.triggers-row {
+			margin-bottom: 8px;
+			gap: 4px;
+		}
+
+		.trigger-btn {
+			height: 36px;
+			margin-top: 0;
+			border-radius: 0 0 8px 8px;
+		}
+
+		.shoulder-btn {
+			height: 36px;
+			margin-top: 6px;
+		}
+
+		.joystick-zone { gap: 4px; flex: 1; }
+		.top-zone    { padding-top: 8px; }
+		.bottom-zone { padding-bottom: 4px; }
+
+		.action-btn { font-size: 13px; }
+	}
+
+	/* ── Landscape: side-by-side but scaled to fit screen height ── */
+	@media (orientation: landscape) {
+		.controller {
+			--ctrl-w: 900px;
+			--ctrl-h: 360px;
+			--joy-w:  240px;
+			--joy-h:  330px;
+			--screen-w: 400px;
+			--joy-radius: 46px;
+
+			--stick-size:  84px;
+			--knob-size:   52px;
+			--dpad-size:   96px;
+			--dpad-arm-w:  32px;
+			--dpad-arm-h:  34px;
+			--action-size: 100px;
+			--action-btn:  36px;
+
+			width: var(--ctrl-w);
+			height: var(--ctrl-h);
+
+			--scale: min(
+				1,
+				min(
+					calc((100vw - 16px) / var(--ctrl-w)),
+					calc((100vh - 16px) / var(--ctrl-h))
+				)
+			);
+			transform: scale(var(--scale));
+			transform-origin: center center;
+		}
+	}
+}
+
+/* ── Very small phones (< 380px wide) ─────────────────── */
+@media (max-width: 380px) and (orientation: portrait) {
+	.joycon {
+		--stick-size:  70px;
+		--knob-size:   44px;
+		--dpad-size:   82px;
+		--dpad-arm-w:  28px;
+		--dpad-arm-h:  30px;
+		--action-size: 88px;
+		--action-btn:  30px;
+		padding: 0 8px 12px;
+	}
+
+	.action-btn { font-size: 11px; }
+}
+
+/* ── Ensure touch targets are never too small on mobile ── */
+@media (pointer: coarse) {
+	.dpad-btn {
+		/* Expand touch area without changing visual size */
+		touch-action: none;
+	}
+
+	.action-btn {
+		/* Minimum touch target of 44px regardless of display size */
+		min-width:  44px;
+		min-height: 44px;
+	}
+}
+
+/* ── Joycons row helper (used in portrait mode HTML) ──── */
+.joycons-row-mobile {
+	display: none; /* hidden by default; JS/HTML restructure handles portrait */
 }
