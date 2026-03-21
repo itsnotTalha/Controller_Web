@@ -33,8 +33,6 @@ http://localhost:8000
 ```
 
 ## Controller Image
-Add a screenshot here:
 
-```
 ![Controller UI](image.png)
-```
+
